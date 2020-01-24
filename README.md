@@ -32,3 +32,14 @@ Upon running the program, users can enter:
 - "charge" followed by the name account number, and an amount they wish to add
 - "credit" followed by the name account number, and an amount they wish to add
 in the command terminal or even the python IDLE shell
+- "summary" to show a summary of any accounts enterd in the system
+
+ex:
+Add Tom 4111111111111111 $1000
+Charge Tom 4111111111111111 $500
+Credit Tom 4111111111111111 $50
+summary 
+returns:
+Tom, $450
+Another option: type the title of a text file containing the same commands in the format explained above 
+My text file is titled "test_input.txt"
