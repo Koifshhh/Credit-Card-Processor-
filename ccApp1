@@ -1,6 +1,5 @@
 ## creates a dictionary to hold the account information and parse the inputs
 accounts = {}
-
 def parse(inputvalue):
 	parsed = inputvalue.split(' ')
 	return parsed
@@ -34,14 +33,19 @@ def credit(name,ccNum,creditAmt):
         
 #returns a summary of the accounts in the system showing the account user's name and balance
 def summary():
-        print("Summary of Accounts")
+
+#seperate array made to order names by order
+        sArray = []
         for key,value in accounts.items():
-                #print("Name %r, balance: $%r", % (accounts[key]["name"], accounts[key]["balance"]))
-                print(f"{accounts[key]['name']}: ${accounts[key]['balance']}")
+                sArray.append(f"{accounts[key]['name']}: ${accounts[key]['balance']}")
+        sArray.sort()
+        ct = 0
+        for i in sArray:
+                print(sArray[ct])
+                ct = ct + 1
 
 #read straight from a txt file into the funtion         
 def readfile_run(filename):
-#        print("read file ", filename)
         f = open(filename,'r')
         if f.mode == 'r':
                 f1 = f.readlines()
@@ -108,15 +112,15 @@ def main():
                                 if prased[0].lower() == 'add':
                                         add(prased[1],prased[2],prased[3].replace('$',''))
                                         keyname = str(prased[1]) + str(prased[2])
-                                        print("New Balance = $",accounts[keyname]["balance"])
+                                        print("New Balance = error")
                                 elif prased[0].lower() == 'charge':
                                         charge(prased[1], prased[2], prased[3].replace('$',''))
                                         keyname = str(prased[1]) + str(prased[2])
-                                        print("New Balance = $",accounts[keyname]["balance"])
+                                        print("New Balance = error")
                                 elif prased[0].lower() == 'credit':
                                         credit(prased[1], prased[2], prased[3].replace('$',''))
                                         keyname = str(prased[1]) + str(prased[2])
-                                        print("New Balance = $",accounts[keyname]["balance"])
+                                        print("New Balance = error")
                                 elif prased[0].lower() == 'summary':
                                         summary()
                                 elif prased[0].lower() == 'test':
@@ -137,3 +141,9 @@ def main():
            
 	
 main()
+
+
+
+    
+
+
