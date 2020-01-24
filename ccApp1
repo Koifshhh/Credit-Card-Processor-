@@ -1,5 +1,6 @@
 ## creates a dictionary to hold the account information and parse the inputs
 accounts = {}
+
 def parse(inputvalue):
 	parsed = inputvalue.split(' ')
 	return parsed
@@ -17,7 +18,7 @@ def add(name,ccNum,crLimit):
         keyname = str(name) + str(ccNum)
         accounts[keyname] = {}
         accounts[keyname]={"name":name,"cc":ccNum,"limit":crLimit,"balance":0}
-        
+       
 #Any invalidated accounts will be ignored 	
 #charge funds to a specified account	
 def charge(name,ccNum,chargeAmt):
@@ -38,85 +39,101 @@ def summary():
                 #print("Name %r, balance: $%r", % (accounts[key]["name"], accounts[key]["balance"]))
                 print(f"{accounts[key]['name']}: ${accounts[key]['balance']}")
 
-        
+#read straight from a txt file into the funtion         
+def readfile_run(filename):
+#        print("read file ", filename)
+        f = open(filename,'r')
+        if f.mode == 'r':
+                f1 = f.readlines()
+                for x in f1:
+                        print(x)
+                        prased = parse(x)
+                        if len(prased) > 1:
+                                val = validate(prased[2])
+                                if val:
 
-def runTest(fileName):
-        pass
-f = open("test_input.txt",'r')
-##if f.mode == 'r':
-##        contents = f.read()
-##        print(contents)
-    # perform file operations
-f1 = f.readlines()
-for x in f1:
-        print(x)
-f.close()
+                                        if prased[0].lower() == 'add':
+                                                add(prased[1],prased[2],prased[3].replace('$',''))
+                                                keyname = str(prased[1]) + str(prased[2])
+                                                print("New Balance = $",accounts[keyname]["balance"])
+                                        elif prased[0].lower() == 'charge':
+                                                charge(prased[1], prased[2], prased[3].replace('$',''))
+                                                keyname = str(prased[1]) + str(prased[2])
+                                                print("New Balance = $",accounts[keyname]["balance"])
+                                        elif prased[0].lower() == 'credit':
+                                                credit(prased[1], prased[2], prased[3].replace('$',''))
+                                                keyname = str(prased[1]) + str(prased[2])
+                                                print("New Balance = $",accounts[keyname]["balance"])
+                                        
+                                                
+                #in the event that an account is invalidated, it will show that account name followed by error along with all the other accounts
+                                else:
+                                        #print(prased[0])
+                                        if prased[0].lower() == 'summary':
+                                                summary()
+                                        elif prased[0].lower() == 'test':
+                                                runTest(prased[1])
+                                        print("error")
+                        #print(contents)
+
+
 
 def main():
         while True:
                 inputstring = input()
                 prased = parse(inputstring)
                 if len(prased) > 1:
-                        
                         val = validate(prased[2])
-                if val:
+                        if val:
 
-                        if prased[0].lower() == 'add':
-                                add(prased[1],prased[2],prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                        elif prased[0].lower() == 'charge':
-                                charge(prased[1], prased[2], prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                        elif prased[0].lower() == 'credit':
-                                credit(prased[1], prased[2], prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                        elif prased[0].lower() == 'summary':
+                                if prased[0].lower() == 'add':
+                                        add(prased[1],prased[2],prased[3].replace('$',''))
+                                        keyname = str(prased[1]) + str(prased[2])
+                                        print("New Balance = $",accounts[keyname]["balance"])
+                                elif prased[0].lower() == 'charge':
+                                        charge(prased[1], prased[2], prased[3].replace('$',''))
+                                        keyname = str(prased[1]) + str(prased[2])
+                                        print("New Balance = $",accounts[keyname]["balance"])
+                                elif prased[0].lower() == 'credit':
+                                        credit(prased[1], prased[2], prased[3].replace('$',''))
+                                        keyname = str(prased[1]) + str(prased[2])
+                                        print("New Balance = $",accounts[keyname]["balance"])
+                                elif prased[0].lower() == 'summary':
+                                        summary()
+                                elif prased[0].lower() == 'test':
+                                        runTest(prased[1])
+                                        
+        #in the event that an account is invalidated, it will show that account name followed by error along with all the other accounts
+                        else:
+                                if prased[0].lower() == 'add':
+                                        add(prased[1],prased[2],prased[3].replace('$',''))
+                                        keyname = str(prased[1]) + str(prased[2])
+                                        print("New Balance = $",accounts[keyname]["balance"])
+                                elif prased[0].lower() == 'charge':
+                                        charge(prased[1], prased[2], prased[3].replace('$',''))
+                                        keyname = str(prased[1]) + str(prased[2])
+                                        print("New Balance = $",accounts[keyname]["balance"])
+                                elif prased[0].lower() == 'credit':
+                                        credit(prased[1], prased[2], prased[3].replace('$',''))
+                                        keyname = str(prased[1]) + str(prased[2])
+                                        print("New Balance = $",accounts[keyname]["balance"])
+                                elif prased[0].lower() == 'summary':
+                                        summary()
+                                elif prased[0].lower() == 'test':
+                                        runTest(prased[1])
+                                print("error")
+
+                elif len(prased) > 0:
+                        if prased[0].lower() == 'summary':
                                 summary()
                         elif prased[0].lower() == 'test':
-                                runTest(prased[1])
-                                
-#in the event that an account is invalidated, it will show that account name followed by error along with all the other accounts
-                else:
-                        if prased[0].lower() == 'add':
-                                add(prased[1],prased[2],prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                        elif prased[0].lower() == 'charge':
-                                charge(prased[1], prased[2], prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                        elif prased[0].lower() == 'credit':
-                                credit(prased[1], prased[2], prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                        elif prased[0].lower() == 'summary':
-                                summary()
-                        elif prased[0].lower() == 'test':
-                                runTest(prased[1])
-                        print("error")
-
-                prased = parse(inputstring)
-                if len(prased) >= 0:
+                                runTest(prased[0])
+                        else:
+                              readfile_run(prased[0])  
                         
-                        run = runTest(f)
-                if run:
-                         if prased[0].lower() == 'add':
-                                add(prased[1],prased[2],prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                         elif prased[0].lower() == 'charge':
-                                charge(prased[1], prased[2], prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                         elif prased[0].lower() == 'credit':
-                                credit(prased[1], prased[2], prased[3].replace('$',''))
-                                keyname = str(prased[1]) + str(prased[2])
-                                print("New Balance = $",accounts[keyname]["balance"])
-                         elif prased[0].lower() == 'summary':
-                                summary()
-                         elif prased[0].lower() == 'test':
-                                runTest(prased[1])
-               
+                              
+                            
+                        
+           
+	
+main()
